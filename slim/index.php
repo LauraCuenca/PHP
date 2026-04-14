@@ -20,6 +20,18 @@ $app->add( function ($request, $handler) {
     ;
 });
 
-// ACÁ VAN LOS ENDPOINTS
+$app->get('/assets', function (Request $request, Response $response) {
+
+ 
+    $data = [
+        ["name" => "Oro", "price" => 100],
+        ["name" => "Plata", "price" => 50],
+        ["name" => "YPF", "price" => 300]
+    ];
+
+    $response->getBody()->write(json_encode($data));
+
+    return $response;
+});
 
 $app->run();
