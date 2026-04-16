@@ -54,14 +54,12 @@ class AuthController {
 
     $token = str_replace('Bearer ', '', $header);
 
-    // buscar usuario por token
     $user = $this->authModel->findByToken($token);
 
     if (!$user) {
         return $this->json($response, ['error' => 'Token inválido'], 401);
     }
 
-    // borrar token
     $this->authModel->clearToken($user['id']);
 
     return $this->json($response, [

@@ -147,7 +147,6 @@ private function json($response, $data, $status){
 public function getAll(Request $request, Response $response){
     $authUser = $request->getAttribute('user');
 
-    // 🔐 solo admin
     if ($authUser['role'] !== 1) {
         return $this->json($response, ['error' => 'Forbidden'], 403);
     }
