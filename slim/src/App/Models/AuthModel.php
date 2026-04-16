@@ -6,15 +6,11 @@ use PDO;
 
 class AuthModel {
 
-    // Ahora recibe Database, igual que tu UserModel
     public function __construct(private Database $database) {}
 
-    public function storeToken($userId, $token)
-    {
-        // 1. Obtienes la conexión PDO desde el objeto database
+    public function storeToken($userId, $token) {
         $pdo = $this->database->getConnection();
         
-        // 2. Usas la variable local $pdo (NO $this->pdo)
         $stmt = $pdo->prepare("
             UPDATE users 
             SET token = ?, token_expired_at = DATE_ADD(NOW(), INTERVAL 5 MINUTE)
