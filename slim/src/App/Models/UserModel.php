@@ -38,5 +38,54 @@ class UserModel {
 
         $this->database->closeConnection();
     }
+
+    public function findById($id){
+    $pdo = $this->database->getConnection();
+
+    $query = "SELECT id, name, email, balance, is_admin FROM users WHERE id = :id";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+    $stmt->execute();
+
+    return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
+}
+
+    public function getPortfolioValue($userId) {
+        return 0;
+    }
+
+    public function update($id, $name = null, $password = null){
+    $pdo = $this->database->getConnection();
+
+    $fields = [];
+    $params = [':id' => $id];
+
+    if ($name !== null) {
+        $fields[] = "name = :name";
+        $params[':name'] = $name;
+    }
+
+    if ($password !== null) {
+        $fields[] = "password = :password";
+        $params[':password'] = $password;
+    }
+
+    $query = "UPDATE users SET " . implode(', ', $fields) . " WHERE id = :id";
+
+    $stmt = $pdo->prepare($query);
+    $stmt->execute($params);
+
+    $this->database->closeConnection();
+  }
+
+    public function getAll(){
+    $pdo = $this->database->getConnection();
+
+    $query = "SELECT id, name FROM users WHERE is_admin = 0";
+    $stmt = $pdo->prepare($query);
+    $stmt->execute();
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 }
 ?>
