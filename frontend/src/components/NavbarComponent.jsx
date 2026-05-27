@@ -28,10 +28,11 @@ export default function Navbar() {
             {user.role === 1 && (
               <li><Link to="/admin/usuarios" className="nav-admin-btn">Manejo usuarios</Link></li>
             )}
-
-            <li>
-              <button className="nav-logout-btn" onClick={logout}>Logout</button>
-            </li>
+           <li>
+           <button className="nav-logout-btn" onClick={logout} title="Cerrar sesión">
+           <i className="bi bi-box-arrow-right"></i>
+          </button>
+         </li>
           </>
         ) : (
           <>
