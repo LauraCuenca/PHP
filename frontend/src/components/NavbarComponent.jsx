@@ -1,10 +1,16 @@
 import '../assets/styles/navbar.css';
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Navbar() {
   const { user, logout } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();  
+    navigate("/");  
+  };
 
   return (
     <nav className="navbar">
@@ -29,7 +35,7 @@ export default function Navbar() {
               <li><Link to="/admin/usuarios" className="nav-admin-btn">Manejo usuarios</Link></li>
             )}
            <li>
-           <button className="nav-logout-btn" onClick={logout} title="Cerrar sesión">
+           <button className="nav-logout-btn" onClick={handleLogout} title="Cerrar sesión">
            <i className="bi bi-box-arrow-right"></i>
           </button>
          </li>

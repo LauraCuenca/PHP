@@ -15,6 +15,8 @@
   margin: 0;
   padding: 0;
   margin-left: 20px;
+  align-items: center;    /* Centra verticalmente las cápsulas, links e iconos */
+  justify-content: center;
 }
 
 .navbar a {
@@ -26,4 +28,40 @@
 
 .navbar a:hover {
   color: #7cc4ff;
+}
+
+.nav-logout-btn {
+  background: transparent; 
+  border: none;             
+  padding: 0;               
+  cursor: pointer;          
+  display: flex;            
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-logout-btn i {
+  color: #ffffff;        
+  font-size: 1.3rem;    
+  transition: color 0.2s ease; 
+}
+
+.nav-logout-btn:hover i {
+  color: #ff4d4d;           
+}
+
+.nav-welcome, 
+.nav-portfolio {
+  font-family: 'Inter', sans-serif; 
+  font-weight: 600;               
+  color: #ffffff;                  
+  font-size: 1.1rem; 
+  
+  background-color: rgba(255, 255, 255, 0.15); 
+  padding: 6px 14px;                    
+  border-radius: 20px;                    
+  display: inline-flex;                 
+  align-items: center;
+  
+  border: 1px solid rgba(255, 255, 255, 0.1); 
 }

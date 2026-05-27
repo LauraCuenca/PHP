@@ -18,7 +18,7 @@ function HeaderComponent() {
         </Link>
 
         <h1 className="header-title">
-          WallyStreet - Tu guía financiera para invertir con confianza
+          WallyStreet 
         </h1>
       </div>
 
