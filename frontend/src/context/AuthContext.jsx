@@ -1,21 +1,54 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
+import { getUserById } from "../services/apiServices";
 
 export const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  const login = (userData) => {
-    setUser(userData);
+  useEffect(() => {
+    const verificarToken = async () => {
+      const token = localStorage.getItem("token");
+
+      if (token) {
+        try {
+          const userId = localStorage.getItem("userId");
+          const res = await getUserById(userId); 
+          setUser({ token, ...res.data }); 
+        } catch (error) {
+          console.error("Token inválido:", error);
+          localStorage.removeItem("token");
+          localStorage.removeItem("userId");
+          setUser(null);
+        }
+      }
+      setLoading(false);
+    };
+
+    verificarToken();
+  }, []);
+
+  const loginContext = async (token, userId) => {
+    localStorage.setItem("token", token);
+    localStorage.setItem("userId", userId);
+    try {
+      const res = await getUserById(userId);
+      setUser({ token, ...res.data });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
-  const logout = () => {
+  const logoutContext = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("userId");
     setUser(null);
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
-      {children}
+    <AuthContext.Provider value={{ user, login: loginContext, logout: logoutContext }}>
+      {!loading && children}
     </AuthContext.Provider>
   );
 }

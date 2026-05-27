@@ -38,11 +38,11 @@ public function login(Request $request, Response $response)
     $token = bin2hex(random_bytes(32));
 
     $this->authModel->storeToken($user['id'], $token);
-
-    $response = $response->withHeader(
-        'Authorization',
-        'Bearer ' . $token
-    );
+    
+     $response = $response
+        ->withHeader('Authorization', 'Bearer ' . $token)
+        ->withHeader('X-User-Id', $user['id'])
+        ->withHeader('Access-Control-Expose-Headers', 'Authorization, X-User-Id');
 
     return $this->json($response, [
         'message' => 'Login exitoso'
