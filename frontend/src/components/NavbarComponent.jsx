@@ -44,6 +44,7 @@ export default function Navbar() {
           <>
             <li><Link to="/login">Login</Link></li>
             <li><Link to="/register">Registro</Link></li>
+            <li><Link to="/assets">Listado Assets</Link></li>
           </>
         )}
 

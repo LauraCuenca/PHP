@@ -16,4 +16,8 @@ export const deleteUser = (data) => api.delete(`/users/${data.id}`);
 
 export const getUserById = (id) => api.get(`/users/${id}`);
 
+export const getAssets = () => api.get("/assets");
+
+export const getAssetById = (id) => api.get(`/assets/${id}`);
+
 
