@@ -15,7 +15,7 @@
   margin: 0;
   padding: 0;
   margin-left: 20px;
-  align-items: center;    /* Centra verticalmente las cápsulas, links e iconos */
+  align-items: center;  
   justify-content: center;
 }
 
