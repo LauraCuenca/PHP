@@ -14,35 +14,40 @@ class AuthController {
         private AuthModel $authModel
     ) {}
 
-    public function login(Request $request, Response $response)
-    {
-        $data = $request->getParsedBody();
+public function login(Request $request, Response $response)
+{
+    $data = $request->getParsedBody();
 
-        $email = $data['email'] ?? null;
-        $password = $data['password'] ?? null;
+    $email = $data['email'] ?? null;
+    $password = $data['password'] ?? null;
 
-        if (!$email || !$password) {
-            return $this->json($response, ['error' => 'Faltan datos'], 400);
-        }
-
-        $user = $this->userModel->findByEmail($email);
-
-        if (!$user) {
-            return $this->json($response, ['error' => 'Usuario no encontrado'], 404);
-        }
-
-        if (!password_verify($password, $user['password'])) {
-            return $this->json($response, ['error' => 'Password incorrecta'], 401);
-        }
-
-        $token = bin2hex(random_bytes(32));
-
-        $this->authModel->storeToken($user['id'], $token);
-
-        return $this->json($response, [
-            'token' => $token
-        ], 200);
+    if (!$email || !$password) {
+        return $this->json($response, ['error' => 'Faltan datos'], 400);
     }
+
+    $user = $this->userModel->findByEmail($email);
+
+    if (!$user) {
+        return $this->json($response, ['error' => 'Usuario no encontrado'], 404);
+    }
+
+    if (!password_verify($password, $user['password'])) {
+        return $this->json($response, ['error' => 'Password incorrecta'], 401);
+    }
+
+    $token = bin2hex(random_bytes(32));
+
+    $this->authModel->storeToken($user['id'], $token);
+
+    $response = $response->withHeader(
+        'Authorization',
+        'Bearer ' . $token
+    );
+
+    return $this->json($response, [
+        'message' => 'Login exitoso'
+    ], 200);
+}
 
     public function logout(Request $request, Response $response)
 {
