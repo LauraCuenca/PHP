@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { updateUser } from "../services/apiServices";
 import "../assets/styles/auth.css";
@@ -7,8 +7,8 @@ export default function EditarPage() {
   const { user, updateUser: updateUserContext } = useContext(AuthContext);
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
 
@@ -33,23 +33,45 @@ export default function EditarPage() {
       return;
     }
 
-    if (!name && !password) {
-      setError("Debe rellenar al menos el campo de Nombre o de Contraseña.");
+    // --- VALIDACIONES REQUERIDAS ---
+
+    if (!name.trim()) {
+      setError("El nombre de usuario no puede estar vacío.");
       return;
     }
-
-    const dataToUpdate = {};
-    if (name) dataToUpdate.name = name;
-    if (password) dataToUpdate.password = password;
+    if (name.trim().length > 30) {
+      setError("El nombre de usuario no puede tener más de 30 caracteres.");
+      return;
+    }
+    if (password) {
+      const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W]).{8,}$/;
+      if (!passwordRegex.test(password)) {
+        setError("La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un carácter especial.");
+        return;
+      }
+      if (password !== confirmPassword) {
+        setError("Las contraseñas no coinciden.");
+        return;
+      }
+    }
+    const dataToUpdate = {
+      name: name.trim()
+    };
+    
+    if (password) {
+      dataToUpdate.password = password;
+    }
 
     try {
       const res = await updateUser(userIdFinal, dataToUpdate);
-      if (name) {
-        updateUserContext({ name: name });
-     }
+      
+      updateUserContext({ name: name.trim() });
 
       setMessage(res.data?.message || "Usuario actualizado correctamente");
+      
+      setName("");
       setPassword("");
+      setConfirmPassword("");
     } catch (err) {
       console.error("Error al actualizar usuario:", err);
       setError(err.response?.data?.error || "Error al actualizar el perfil");
@@ -65,17 +87,18 @@ export default function EditarPage() {
         {message && <div className="alert alert-success">{message}</div>}
 
         <form onSubmit={handleSubmit}>
+
           <div className="mb-3">
-            <label className="form-label">Nombre</label>
+            <label className="form-label">Nombre del usuario</label>
             <input
               type="text"
               className="form-control"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="Tu nombre completo"
+              placeholder="Ej: JuanPerez"
+              maxLength={31}
             />
           </div>
-
           <div className="mb-3">
             <label className="form-label">Nueva Contraseña (Opcional)</label>
             <div className="input-group">
@@ -84,7 +107,7 @@ export default function EditarPage() {
                 className="form-control"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Mínimo 8 caracteres"
+                placeholder="Mínimo 8 caracteres con mayúsculas/números"
               />
               <button
                 type="button"
@@ -94,6 +117,18 @@ export default function EditarPage() {
                 <i className={showPassword ? "bi bi-eye-slash" : "bi bi-eye"}></i>
               </button>
             </div>
+          </div>
+
+          <div className="mb-3">
+            <label className="form-label">Repetir Contraseña</label>
+            <input
+              type={showPassword ? "text" : "password"}
+              className="form-control"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              placeholder="Repite la contraseña de arriba"
+              disabled={!password}
+            />
           </div>
 
           <button type="submit" className="btn btn-warning w-100 text-white">
