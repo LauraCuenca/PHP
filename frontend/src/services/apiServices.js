@@ -10,9 +10,9 @@ export const getUsers = () => api.get("/users");
 
 export const createUser = (data) => api.post("/users", data);
 
-export const updateUser = (data) => api.put(`/users/${data.id}`, data);
+export const updateUser = (id, data) => api.put(`/users/${id}`, data);
 
-export const deleteUser = (data) => api.delete(`/users/${data.id}`);
+export const deleteUser = (id) => api.delete(`/users/${id}`);
 
 export const getUserById = (id) => api.get(`/users/${id}`);
 
