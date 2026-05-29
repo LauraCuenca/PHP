@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { createUser as registerAPI } from "../services/apiServices"; // Asegúrate de tener esta función en tus servicios
+import { createUser as registerAPI } from "../services/apiServices";
 import "../assets/styles/auth.css";
 
 export default function Register() {
