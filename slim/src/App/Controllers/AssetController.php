@@ -15,28 +15,20 @@ public function __construct(private $assetModel) {}
         $minPrice = $params['min_price'] ?? null;
         $maxPrice = $params['max_price'] ?? null;
         $rows = $this->assetModel->getAssetByFilter($nombre, $minPrice, $maxPrice);
-        if (empty ($rows)) {
-            $mensaje = 'No se encontraron activos.';
-        $response->getBody()->write(json_encode([
-            'message' => $mensaje,
-            'Sugerencia' => 'Intente con otros criterios de búsqueda.'
-        ]));
-        return $response->withHeader('Content-Type', 'application/json')->withStatus(404);;
+        if (empty($rows)) {
+            $activos = [];
         }
         else {
-        $activos = array_map(function ($row) {
+            $activos = array_map(function ($row) {
             return [
                 'Nombre' => $row['name'],
                 'Precio' => $row['current_price'],
             ];
-        }, $rows);
-        $response->getBody()->write(json_encode([
-            'Mensaje' => 'Activos encontrados.',
-            'Activos' => $activos
-        ]));
+            }, $rows);
+        }
+        $response->getBody()->write(json_encode(['Activos' => $activos]));
         return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
         }
-    }
 
     public function getById(Request $request, Response $response, $args) {
         $assetId = $args['asset_id'];
