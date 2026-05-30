@@ -1,55 +1,18 @@
-.stat-content {
-    background-color: white;
-    border-radius: 8px;
-    overflow: hidden;
+.filtro-input {
+    width: 160px;
 }
 
-.filtro-container {
-    padding: 1.5rem;
-    display: flex;
-    gap: 1rem;
-    border-bottom: 1px solid #e0e0e0;
+.stat-card {
+    max-width: 1000px;
+    margin: 0 auto;
 }
 
-.assets-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-}
-
-.asset-item {
-    background-color: white;
-    color: #0a0f2c;
-    padding: 1rem 2rem;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+.asset-row {
+    display: grid !important;
+    grid-template-columns: 1fr 150px 40px;
     align-items: center;
-    border-bottom: 1px solid #e0e0e0;
-}
-
-.asset-nombre {
-    text-align: left;
 }
 
 .asset-precio {
-    text-align: center;
-}
-
-.asset-flecha {
-    text-align: right;
-}
-
-.asset-item:last-child {
-    border-bottom: none;
-}
-.precio-sube {
-    color: green;
-    font-weight: bold;
-}
-
-.precio-baja {
-    color: red;
-    font-weight: bold;
+    text-align: left;
 }

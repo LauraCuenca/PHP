@@ -33,35 +33,64 @@ export default function StatPage() {
     return () => clearInterval(interval);
   }, [filtroNombre, minPrice, maxPrice]);
 
-  return (
-  <div className="stat-container">
-    <h1>Lista de Activos</h1>
-    <h4>Filtrar por:</h4>
-    <FiltroComponent
-        filtroNombre={filtroNombre}
-        setFiltroNombre={setFiltroNombre}
-        minPrice={minPrice}
-        setMinPrice={setMinPrice}
-        maxPrice={maxPrice}
-        setMaxPrice={setMaxPrice}
-    />    
-  <ul className="assets-list">
-  {assets.map(asset => {
-    const precioAnterior = preciosAnteriores.current[asset.Nombre];
-    const subio = precioAnterior !== undefined && parseFloat(asset.Precio) > parseFloat(precioAnterior);
-    const bajo = precioAnterior !== undefined && parseFloat(asset.Precio) < parseFloat(precioAnterior);
-    return (
-    <li key={asset.Nombre} className="asset-item">
-    <span className="asset-nombre">{asset.Nombre}</span>
-    <span className="asset-precio">${asset.Precio}</span>
-    <span className="asset-flecha">
-        {subio && <span className="precio-sube">↑</span>}
-        {bajo && <span className="precio-baja">↓</span>}
-    </span>
-</li>
-    );
-  })}
-  </ul>
+return (
+  <div className="container mt-4">
+
+    <div className="card shadow stat-card">
+
+      <div className="card-body">
+
+        <h2 className="card-title mb-4">Lista de Activos</h2>
+
+        <FiltroComponent
+          filtroNombre={filtroNombre}
+          setFiltroNombre={setFiltroNombre}
+          minPrice={minPrice}
+          setMinPrice={setMinPrice}
+          maxPrice={maxPrice}
+          setMaxPrice={setMaxPrice}
+        />
+
+        <ul className="list-group list-group-flush mt-4">
+
+          {assets.map(asset => {
+            const precioAnterior = preciosAnteriores.current[asset.Nombre];
+
+            const subio =
+              precioAnterior !== undefined &&
+              parseFloat(asset.Precio) > parseFloat(precioAnterior);
+
+            const bajo =
+              precioAnterior !== undefined &&
+              parseFloat(asset.Precio) < parseFloat(precioAnterior);
+
+            return (
+               <li
+                 key={asset.Nombre}
+                 className="list-group-item asset-row"
+              >
+              <span className="fw-semibold">
+                      {asset.Nombre}
+              </span>
+
+              <span className="asset-precio">
+                     ${asset.Precio}
+              </span>
+
+              <span>
+                  {subio && <span className="text-success fw-bold">↑</span>}
+                  {bajo && <span className="text-danger fw-bold">↓</span>}
+              </span>
+              </li>
+            );
+          })}
+
+        </ul>
+
+      </div>
+
+    </div>
+
   </div>
 );
 }
