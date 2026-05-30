@@ -26,6 +26,7 @@ export default function Navbar() {
                 Portfolio: ${user.portfolio_value ?? 0}
               </span>
             </li>
+            <li><Link to="/assets">Listado Assets</Link></li>
             <li><Link to="/portfolio">Mi portfolio</Link></li>
             <li><Link to="/operaciones">Mis operaciones</Link></li>
             <li><Link to="/panel">Ver Panel</Link></li>
