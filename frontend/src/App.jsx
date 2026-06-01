@@ -10,6 +10,8 @@ import Register from "./pages/RegistroPage";
 import Editar from "./pages/EditarPage";
 import Assets from "./pages/StatPage";
 
+import ManejoUsuarios from "./pages/ManejoUsuariosPage";
+
 
 function App() {
   return (
@@ -25,6 +27,8 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/editar-perfil" element={<Editar />} />
         <Route path="/assets" element={<Assets />} />
+        <Route path="/admin/usuarios" element={<ManejoUsuarios />} />
+        <Route path="/editar-perfil/:id" element={<Editar />} />
         </Routes>
         </main>
 
