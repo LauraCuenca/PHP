@@ -10,7 +10,7 @@ import Register from "./pages/RegistroPage";
 import Editar from "./pages/EditarPage";
 import Assets from "./pages/StatPage";
 
-import ManejoUsuarios from "./pages/ManejoUsuariosPage";
+import ManejoUsuarios from "./pages/ManejoUsuarioPage";
 
 
 function App() {

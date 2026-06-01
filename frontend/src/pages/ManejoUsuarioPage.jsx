@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import { getUsers } from "../services/apiServices";
-import "../assets/styles/manejoUsuarios.css";
+import "../assets/styles/ManejoUsuario.css";
 
 export default function ManejoUsuariosPage() {
   const { user } = useContext(AuthContext);
