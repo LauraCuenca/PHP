@@ -22,9 +22,6 @@ try {
   const res = await loginAPI({ email, password });
   const authHeader = res.headers.get('authorization');
   const userId = res.headers.get('x-user-id');
-  console.log("TOKEN ORIGINAL:", authHeader);
-  console.log("USER ID:", userId);
-
   if (authHeader) {
 
     const tokenLimpio = authHeader.split(' ')[1];

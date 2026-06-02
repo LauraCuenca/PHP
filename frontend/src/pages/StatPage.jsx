@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import "../assets/styles/StatPage.css";
 import FiltroComponent from "../components/FiltroComponent";
+import AssetRow from "../components/AssetRow";
 const refreshInterval = 3*60*1000; // Intervalo de actualización (3 minutos)
 
 
@@ -18,9 +19,12 @@ export default function StatPage() {
     if (maxPrice) params.append("max_price", maxPrice);
     const response = await fetch(`http://localhost/assets?${params}`);
     const data = await response.json();
-    setAssets(prev => {prev.forEach(asset => {preciosAnteriores.current[asset.Nombre] = asset.Precio;});
-    return data.Activos;
+
+    assets.forEach(asset => {
+      preciosAnteriores.current[asset.Nombre] = asset.Precio;
     });
+    setAssets(data.Activos || []);
+
     }
     catch (error) {
       console.error("Error fetching assets:", error);
@@ -53,37 +57,16 @@ return (
 
         <ul className="list-group list-group-flush mt-4">
 
-          {assets.map(asset => {
-            const precioAnterior = preciosAnteriores.current[asset.Nombre];
-
-            const subio =
-              precioAnterior !== undefined &&
-              parseFloat(asset.Precio) > parseFloat(precioAnterior);
-
-            const bajo =
-              precioAnterior !== undefined &&
-              parseFloat(asset.Precio) < parseFloat(precioAnterior);
-
-            return (
-               <li
-                 key={asset.Nombre}
-                 className="list-group-item asset-row"
-              >
-              <span className="fw-semibold">
-                      {asset.Nombre}
-              </span>
-
-              <span className="asset-precio">
-                     ${asset.Precio}
-              </span>
-
-              <span>
-                  {subio && <span className="text-success fw-bold">↑</span>}
-                  {bajo && <span className="text-danger fw-bold">↓</span>}
-              </span>
-              </li>
-            );
-          })}
+        {assets.map(asset => (
+            <AssetRow
+              key={asset.Nombre}
+              asset={asset}
+              precioAnterior={preciosAnteriores.current[asset.Nombre]}
+              esPanel={false}
+              onVerGrafico={() => abrirModalGrafico(asset)}
+              onComprar={() => abrirModalCompra(asset)}
+            />
+          ))}
 
         </ul>
 

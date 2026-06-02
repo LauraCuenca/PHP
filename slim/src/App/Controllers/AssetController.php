@@ -21,6 +21,7 @@ public function __construct(private $assetModel) {}
         else {
             $activos = array_map(function ($row) {
             return [
+                'id'     => $row['id'],
                 'Nombre' => $row['name'],
                 'Precio' => $row['current_price'],
             ];
