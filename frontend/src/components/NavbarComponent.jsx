@@ -32,7 +32,7 @@ export default function Navbar() {
             <li><Link to="/panel">Ver Panel</Link></li>
             <li><Link to="/editar-perfil">Editar usuario</Link></li>
 
-            {user.role === 1 && (
+            {user.is_admin === 1 && (
               <li><Link to="/admin/usuarios" className="nav-admin-btn">Manejo usuarios</Link></li>
             )}
            <li>
