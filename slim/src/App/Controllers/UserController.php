@@ -125,7 +125,8 @@ class UserController {
         'email' => $user['email'],
         'name' => $user['name'],
         'balance' => (float) $user['balance'],
-        'portfolio_value' => (float) $portfolioValue
+        'portfolio_value' => (float) $portfolioValue,
+        'is_admin' => (int) $user['is_admin']
         ]));
 
         return $response->withHeader('Content-Type', 'application/json')
