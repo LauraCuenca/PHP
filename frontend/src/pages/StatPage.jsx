@@ -1,8 +1,10 @@
 import { useEffect, useState, useRef } from "react";
+import { getAssets } from "../services/apiServices";
 import "../assets/styles/StatPage.css";
 import FiltroComponent from "../components/FiltroComponent";
 import AssetRow from "../components/AssetRow";
 const refreshInterval = 3*60*1000; // Intervalo de actualización (3 minutos)
+const REFRESH_INTERVAL = 30 * 1000; // 30 segundos
 
 
 export default function StatPage() {
@@ -10,21 +12,24 @@ export default function StatPage() {
   const [filtroNombre, setFiltroNombre] = useState("");
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
-  const preciosAnteriores = useRef({});
+  const preciosAnteriores = useRef(JSON.parse(localStorage.getItem("preciosAnteriores")) || {});
+
   const fetchAssets = async () => {
     try {
     const params = new URLSearchParams();
     if (filtroNombre) params.append("type", filtroNombre);
     if (minPrice) params.append("min_price", minPrice);
     if (maxPrice) params.append("max_price", maxPrice);
-    const response = await fetch(`http://localhost/assets?${params}`);
-    const data = await response.json();
-
-    assets.forEach(asset => {
-      preciosAnteriores.current[asset.Nombre] = asset.Precio;
+    
+    const res = await getAssets(params);
+    const data = res.data;
+    setAssets(prev => {
+      prev.forEach(asset => {
+        preciosAnteriores.current[asset.Nombre] = asset.Precio;
+      });
+      localStorage.setItem("preciosAnteriores", JSON.stringify(preciosAnteriores.current));
+      return data.Activos || [];
     });
-    setAssets(data.Activos || []);
-
     }
     catch (error) {
       console.error("Error fetching assets:", error);
@@ -33,7 +38,7 @@ export default function StatPage() {
 
   useEffect(() => {
     fetchAssets();
-    const interval = setInterval(fetchAssets, refreshInterval);
+    const interval = setInterval(fetchAssets, REFRESH_INTERVAL);
     return () => clearInterval(interval);
   }, [filtroNombre, minPrice, maxPrice]);
 

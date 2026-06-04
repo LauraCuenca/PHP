@@ -3,10 +3,9 @@ import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 
-export default function Navbar() {
+export default function NavBarComponent() {
   const { user, logout } = useContext(AuthContext);
   const navigate = useNavigate();
-
   const handleLogout = () => {
     logout();  
     navigate("/");  
@@ -23,7 +22,7 @@ export default function Navbar() {
             </li>
             <li>
               <span className="nav-portfolio">
-                Portfolio: ${user.portfolio_value ?? 0}
+                Portfolio: ${Number(user.portfolio_value ?? 0).toFixed(2)}
               </span>
             </li>
             <li><Link to="/assets">Listado Assets</Link></li>
