@@ -51,10 +51,11 @@ export default function ManejoUsuariosPage() {
     return valorA - valorB;
   });
 
-  const mejorUsuarioId =
-    usuariosFiltrados.length > 0
-      ? usuariosFiltrados[0].id
-      : null;
+  const mejorPortfolio = Math.max(
+  ...usuarios.map((usuario) =>
+    Number(usuario.portfolio_value || 0)
+  )
+);
 
   if (!user) {
     return (
@@ -114,15 +115,15 @@ export default function ManejoUsuariosPage() {
             </thead>
 
             <tbody>
-              {usuariosFiltrados.map((usuario) => (
+              {usuariosFiltrados.map((usuario, index) => (
                 <tr
-                  key={usuario.id}
+                  key={usuario.id ?? index}
                   className={
-                    usuario.id === mejorUsuarioId
-                      ? "usuario-destacado"
-                      : ""
+                     Number(usuario.portfolio_value || 0) === mejorPortfolio
+                       ? "usuario-destacado"
+                       : ""
                   }
-                >
+              >
                   <td>{usuario.name}</td>
 
                   <td>
