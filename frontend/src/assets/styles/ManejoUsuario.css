@@ -2,49 +2,6 @@
   padding: 24px;
 }
 
-.manejo-usuarios-page h2 {
-  margin-bottom: 20px;
-}
-
-.manejo-usuarios-controles {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-bottom: 20px;
-}
-
-.manejo-usuarios-controles input {
-  min-width: 240px;
-  padding: 8px;
-}
-
-.manejo-usuarios-controles button,
-.manejo-usuarios-tabla button {
-  padding: 8px 12px;
-  cursor: pointer;
-}
-
-.manejo-usuarios-tabla {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.manejo-usuarios-tabla th,
-.manejo-usuarios-tabla td {
-  border: 1px solid #ddd;
-  padding: 10px;
-  text-align: left;
-}
-
-.manejo-usuarios-tabla th {
-  background-color: #f2f2f2;
-}
-
 .usuario-destacado {
-  background-color: #fff3cd;
-  font-weight: bold;
-}
-
-.manejo-usuarios-error {
-  color: #b00020;
+  background-color: #d7b74fdc;
 }
