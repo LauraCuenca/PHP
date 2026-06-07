@@ -78,10 +78,10 @@ export default function PortfolioPage() {
         }
     };
 
-return (
-    <div className="container mt-4">
-        <div className="card shadow stat-card">
-            <div className="card-body">
+    return (
+        <div className="container mt-4">
+            <div className="card shadow stat-card">
+                <div className="card-body">
                 <h2 className="card-title mb-4">Mi Portfolio</h2>
                 <h4>Saldo disponible: <strong>${Number(balance).toFixed(2)}</strong></h4>
                 {loading && (
@@ -143,8 +143,8 @@ return (
                     onEliminarExitoso={() => fetchPortfolio()}
                 />
                 <Link to="/panel" className="btn btn-primary mb-3">Ver Panel</Link>
+                </div>
             </div>
         </div>
-    </div>
-);
+    );
 }

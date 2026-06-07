@@ -30,7 +30,7 @@ export default function VentaComponent({ asset, isOpen, onClose, onVentaExitosa 
         updateUser({ balance: nuevoBalance });
 
         alert("¡Operación de venta realizada con éxito!");
-        onVentaExitosa(); // solo notifica al padre para refrescar
+        onVentaExitosa();
         onClose();
     } catch (error) {
         alert(
@@ -40,7 +40,7 @@ export default function VentaComponent({ asset, isOpen, onClose, onVentaExitosa 
     }
     };
 
-    return (
+return (
         <div className="modal d-block bg-dark bg-opacity-50">
             <div className="modal-dialog">
                 <div className="modal-content">
@@ -72,9 +72,6 @@ export default function VentaComponent({ asset, isOpen, onClose, onVentaExitosa 
                                 ${gananciaTotal}
                             </span>
                             </div>
-                            <button type="submit" className="btn btn-primary">
-                                Vender
-                            </button>
                             </div>
                             <div className="modal-footer">
                             <button type="button" className="btn btn-secondary" onClick={onClose}>Cancelar</button>

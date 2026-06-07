@@ -15,6 +15,7 @@ export default function EliminarComponent({ asset, isOpen, onClose, onEliminarEx
             );
         }
     };
+    
     return (
         <div className="modal d-block bg-dark bg-opacity-50">
             <div className="modal-dialog">

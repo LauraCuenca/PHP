@@ -4,7 +4,7 @@ import "../assets/styles/StatPage.css";
 import FiltroComponent from "../components/FiltroComponent";
 import AssetRow from "../components/AssetRow";
 const refreshInterval = 3*60*1000; // Intervalo de actualización (3 minutos)
-const REFRESH_INTERVAL = 30 * 1000; // 30 segundos
+const REFRESH_INTERVAL = 30 * 1000; // Intervalo de actualización (30 segundos) para prueba
 
 
 export default function StatPage() {
@@ -38,7 +38,7 @@ export default function StatPage() {
 
   useEffect(() => {
     fetchAssets();
-    const interval = setInterval(fetchAssets, REFRESH_INTERVAL);
+    const interval = setInterval(fetchAssets, refreshInterval);
     return () => clearInterval(interval);
   }, [filtroNombre, minPrice, maxPrice]);
 

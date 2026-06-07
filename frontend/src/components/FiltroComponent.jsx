@@ -6,6 +6,7 @@ export default function FiltroComponent({
   maxPrice,
   setMaxPrice
 }) {
+  
   return (
     <div className="row g-3">
 
