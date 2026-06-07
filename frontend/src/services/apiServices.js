@@ -20,4 +20,16 @@ export const getAssets = () => api.get("/assets");
 
 export const getAssetById = (id) => api.get(`/assets/${id}`);
 
+export const getTransactions = (type = "", assetId = "") => {
+  const params = {};
 
+  if (type !== "") {
+    params.type = type;
+  }
+
+  if (assetId !== "") {
+    params.asset_id = assetId;
+  }
+
+  return api.get("/transactions", { params });
+};
