@@ -199,6 +199,7 @@ class UserController {
             $portfolioValue = $this->userModel->getPortfolioValue($user['id']);
 
             $result[] = [
+                'id' => $user['id'],
                 'name' => $user['name'],
                 'portfolio_value' => (float) $portfolioValue
             ];
