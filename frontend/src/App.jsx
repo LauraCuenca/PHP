@@ -11,6 +11,7 @@ import Editar from "./pages/EditarPage";
 import Assets from "./pages/StatPage";
 
 import ManejoUsuarios from "./pages/ManejoUsuarioPage";
+import MisOperaciones from "./pages/MisOperacionesPage";
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
         <Route path="/assets" element={<Assets />} />
         <Route path="/admin/usuarios" element={<ManejoUsuarios />} />
         <Route path="/editar-perfil/:id" element={<Editar />} />
+        <Route path="/operaciones" element={<MisOperaciones />} />
         </Routes>
         </main>
 
