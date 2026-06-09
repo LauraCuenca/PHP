@@ -1,10 +1,12 @@
 import { useState, useContext } from "react";
+import { useParams } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import { updateUser } from "../services/apiServices";
 import "../assets/styles/auth.css";
 
 export default function EditarPage() {
   const { user, updateUser: updateUserContext } = useContext(AuthContext);
+  const { id } = useParams();
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -26,7 +28,11 @@ export default function EditarPage() {
     setError("");
     setMessage("");
 
-    const userIdFinal = user.id || user.id_user || localStorage.getItem("userId");
+    const userIdFinal =
+      id ||
+      user.id ||
+      user.id_user ||
+      localStorage.getItem("userId");
 
     if (!userIdFinal) {
       setError("Error crítico: No se pudo determinar tu ID de usuario.");
@@ -65,7 +71,9 @@ export default function EditarPage() {
     try {
       const res = await updateUser(userIdFinal, dataToUpdate);
       
-      updateUserContext({ name: name.trim() });
+      if (!id) {
+        updateUserContext({ name: name.trim() });
+      }
 
       setMessage(res.data?.message || "Usuario actualizado correctamente");
       

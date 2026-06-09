@@ -20,11 +20,4 @@ export const getAssets = () => api.get("/assets");
 
 export const getAssetHistory = (id, quantity = 5) =>  api.get(`/assets/${id}/history/${quantity}`);
 
-export const buyAsset = (assetId, quantity) => api.post('/trade/buy', { asset_id: assetId, quantity });
 
-export const sellAsset = (assetId, quantity) => api.post('/trade/sell', { asset_id: assetId, quantity });
-
-
-export const getPortfolio = () =>  api.get('/portfolio');
-
-export const deletePortfolioAsset = (assetId) =>  api.delete(`/portfolio/${assetId}`);
