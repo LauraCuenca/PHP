@@ -1,11 +1,15 @@
 import { useEffect, useState } from "react";
 import { getTransactions } from "../services/apiServices";
 import FiltroOperacionesComponent from "../components/FiltroOperacionesComponent";
+import PaginacionComponent from "../components/PaginacionComponent";
 
 export default function MisOperacionesPage() {
   const [operaciones, setOperaciones] = useState([]);
   const [tipo, setTipo] = useState("");
   const [assetSeleccionado, setAssetSeleccionado] = useState("");
+
+  const [paginaActual, setPaginaActual] = useState(1);
+  const registrosPorPagina = 5;
 
   useEffect(() => {
     const cargarOperaciones = async () => {
@@ -19,6 +23,10 @@ export default function MisOperacionesPage() {
 
     cargarOperaciones();
   }, []);
+
+  useEffect(() => {
+    setPaginaActual(1);
+  }, [tipo, assetSeleccionado]);
 
   const assetsUnicos = [
     ...new Set(
@@ -36,6 +44,23 @@ export default function MisOperacionesPage() {
 
     return coincideTipo && coincideAsset;
   });
+
+  const indiceUltimo =
+    paginaActual * registrosPorPagina;
+
+  const indicePrimero =
+    indiceUltimo - registrosPorPagina;
+
+  const operacionesPagina =
+    operacionesFiltradas.slice(
+      indicePrimero,
+      indiceUltimo
+    );
+
+  const totalPaginas = Math.ceil(
+    operacionesFiltradas.length /
+      registrosPorPagina
+  );
 
   return (
     <section className="manejo-usuarios-page">
@@ -62,7 +87,7 @@ export default function MisOperacionesPage() {
           </thead>
 
           <tbody>
-            {operacionesFiltradas.map((op) => (
+            {operacionesPagina.map((op) => (
               <tr key={op.id}>
                 <td>
                   {new Date(op.transaction_date)
@@ -88,6 +113,14 @@ export default function MisOperacionesPage() {
           </tbody>
         </table>
       </div>
+
+      {operacionesFiltradas.length > 0 && (
+        <PaginacionComponent
+          paginaActual={paginaActual}
+          totalPaginas={totalPaginas}
+          setPaginaActual={setPaginaActual}
+        />
+      )}
 
       {operacionesFiltradas.length === 0 && (
         <p>No se encontraron operaciones.</p>
