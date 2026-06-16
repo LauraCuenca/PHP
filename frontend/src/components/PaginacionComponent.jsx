@@ -20,7 +20,7 @@ export default function PaginacionComponent({
         Anterior
       </button>
 
-      <span>
+      <span className="text-muted fw-semibold">
         Página {paginaActual} de {totalPaginas}
       </span>
 
