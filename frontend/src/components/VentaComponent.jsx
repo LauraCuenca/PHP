@@ -1,11 +1,18 @@
-import {useState, useContext} from "react";
+import {useState, useContext, useEffect} from "react";
 import { sellAsset } from "../services/apiServices";
 import { AuthContext } from "../context/AuthContext";
 
 export default function VentaComponent({ asset, isOpen, onClose, onVentaExitosa }) {
     const { user, updateUser } = useContext(AuthContext);
     const [cantidadVenta, setCantidadVenta] = useState(1);
+    const [mensaje, setMensaje] = useState("");
 
+    useEffect(() => {
+    if (isOpen) {
+        setMensaje("");
+        setCantidadVenta(1);
+    }
+}, [isOpen]);
     if (!isOpen || !asset) return null;
 
     const precioUnitario = parseFloat(asset.Precio);
@@ -25,13 +32,13 @@ export default function VentaComponent({ asset, isOpen, onClose, onVentaExitosa 
 
     try {
         await sellAsset(asset.id, cantidadVenta);
-        
         const nuevoBalance = parseFloat(user.balance) + parseFloat(gananciaTotal);
         updateUser({ balance: nuevoBalance });
-
-        alert("¡Operación de venta realizada con éxito!");
-        onVentaExitosa();
-        onClose();
+        setMensaje("¡Operación de venta realizada con éxito!");
+        setTimeout(() => {
+            onVentaExitosa();
+            onClose();
+        }, 1500); // cierra después de 1.5 segundos
     } catch (error) {
         alert(
             error.response?.data?.Mensaje ||
@@ -40,9 +47,10 @@ export default function VentaComponent({ asset, isOpen, onClose, onVentaExitosa 
     }
     };
 
+    
 return (
         <div className="modal d-block bg-dark bg-opacity-50">
-            <div className="modal-dialog">
+            <div className="modal-dialog modal-dialog-centered">
                 <div className="modal-content">
                     <div className="modal-header">
                         <h5 className="modal-title">Vender Activo</h5>
@@ -74,14 +82,22 @@ return (
                             </div>
                             </div>
                             <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" onClick={onClose}>Cancelar</button>
-                            <button 
-                                type="submit" 
-                                className="btn btn-success px-4" 
-                                disabled={cantidadVenta < 1 || cantidadVenta > maxCantidadVenta || precioUnitario <= 0}
-                            >
-                            Confirmar Venta
-                            </button>
+                                {mensaje ? (
+                                <div className={`alert ${mensaje.includes("Error") ? "alert-danger" : "alert-success"} w-100 mb-0`}>
+                                {mensaje}
+                                </div>
+                                ) : (
+                                <>
+                                <button type="button" className="btn btn-secondary" onClick={onClose}>Cancelar</button>
+                                <button 
+                                    type="submit" 
+                                    className="btn btn-success px-4" 
+                                    disabled={cantidadVenta < 1 || cantidadVenta > maxCantidadVenta || precioUnitario <= 0}
+                                >
+                                Confirmar Venta
+                                </button>
+                                </>
+                                )}
                             </div>
                         </form>
                     </div>

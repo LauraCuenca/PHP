@@ -9,6 +9,8 @@ import Login from "./pages/LoginPage";
 import Register from "./pages/RegistroPage";
 import Editar from "./pages/EditarPage";
 import Assets from "./pages/StatPage";
+import Portfolio from "./pages/PortfolioPage";
+import Panel from "./pages/PanelPage";
 
 
 function App() {
@@ -25,6 +27,11 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/editar-perfil" element={<Editar />} />
         <Route path="/assets" element={<Assets />} />
+        <Route path="/portfolio" element={<Portfolio />} />
+        <Route path="/panel" element={<Panel />} />    
+        <Route path="/admin/usuarios" element={<ManejoUsuarios />} />
+        <Route path="/editar-perfil/:id" element={<Editar />} />
+        <Route path="/operaciones" element={<MisOperaciones />} />
         </Routes>
         </main>
 

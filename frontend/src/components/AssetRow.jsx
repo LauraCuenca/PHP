@@ -2,6 +2,7 @@ import FlechaComponent from "./FlechaComponent";
 
 export default function AssetRow({ asset, precioAnterior, esPanel, onVerGrafico, onComprar }) {
 
+
   return (
     <li className="list-group-item asset-row d-flex justify-content-between align-items-center">
       
@@ -9,10 +10,12 @@ export default function AssetRow({ asset, precioAnterior, esPanel, onVerGrafico,
         <span className="asset-nombre">{asset.Nombre}</span>
         <span className="asset-precio-contenedor text-primary fw-bold">
           <span>${Number(asset.Precio).toFixed(2)}</span>
-          <FlechaComponent
-            precioActual={asset.Precio}
-            precioAnterior={precioAnterior}
-          />
+        <FlechaComponent 
+          precioActual={asset.Precio}
+          precioAnterior={precioAnterior}
+          nombre={asset.Nombre}
+          usarLocalStorage={true}
+        />
         </span>
       </div>
 
