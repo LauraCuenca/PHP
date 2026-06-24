@@ -24,7 +24,22 @@ export const buyAsset = (assetId, quantity) => api.post('/trade/buy', { asset_id
 
 export const sellAsset = (assetId, quantity) => api.post('/trade/sell', { asset_id: assetId, quantity });
 
+export const getTransactions = (type = "", assetId = "") => {
+  const params = {};
 
+<<<<<<< HEAD
 export const getPortfolio = () =>  api.get('/portfolio');
 
 export const deletePortfolioAsset = (assetId) =>  api.delete(`/portfolio/${assetId}`);
+=======
+  if (type !== "") {
+    params.type = type;
+  }
+
+  if (assetId !== "") {
+    params.asset_id = assetId;
+  }
+
+  return api.get("/transactions", { params });
+};
+>>>>>>> magui

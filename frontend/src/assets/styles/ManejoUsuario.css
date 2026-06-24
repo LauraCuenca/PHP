@@ -1,0 +1,19 @@
+.manejo-usuarios-page {
+  padding: 24px;
+  background-color: white;
+  border-radius: 8px;
+  margin: 20px;
+}
+
+.manejo-usuarios-page h2 {
+  margin-bottom: 20px;
+}
+
+.usuario-destacado {
+  font-weight: bold;
+}
+
+.manejo-usuarios-error {
+  color: red;
+  margin-top: 10px;
+}
