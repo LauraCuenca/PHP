@@ -11,6 +11,8 @@ import Editar from "./pages/EditarPage";
 import Assets from "./pages/StatPage";
 import Portfolio from "./pages/PortfolioPage";
 import Panel from "./pages/PanelPage";
+import ManejoUsuarios from "./pages/ManejoUsuarioPage";
+import MisOperaciones from "./pages/MisOperacionesPage";
 
 
 function App() {
