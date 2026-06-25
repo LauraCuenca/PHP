@@ -16,14 +16,13 @@ export const getAssetHistory = (id, quantity = 5) => api.get(`/assets/${id}/hist
 export const buyAsset = (assetId, quantity) => api.post('/trade/buy', { asset_id: assetId, quantity });
 export const sellAsset = (assetId, quantity) => api.post('/trade/sell', { asset_id: assetId, quantity });
 
+export const getPortfolio = () =>  api.get('/portfolio');
+
+export const deletePortfolioAsset = (assetId) => api.delete(`/portfolio/${assetId}`);
+
 export const getTransactions = (type = "", assetId = "") => {
   const params = {};
 
-<<<<<<<<< Temporary merge branch 1
-export const getPortfolio = () =>  api.get('/portfolio');
-
-export const deletePortfolioAsset = (assetId) =>  api.delete(`/portfolio/${assetId}`);
-=========
   if (type !== "") {
     params.type = type;
   }

@@ -5,7 +5,6 @@ import FiltroComponent from "../components/FiltroComponent";
 import AssetRow from "../components/AssetRow";
 
 const refreshInterval = 3*60*1000; // Intervalo de actualización (3 minutos)
-const REFRESH_INTERVAL = 30 * 1000; // Intervalo de actualización (3 segundos) para prueba
 
 export default function StatPage() {
   const [assets, setAssets] = useState([]);

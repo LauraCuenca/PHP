@@ -1,10 +1,17 @@
 import {deletePortfolioAsset} from "../services/apiServices";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function EliminarComponent({ asset, isOpen, onClose, onEliminarExitoso }) {
     const [mensaje, setMensaje] = useState("");
     
+    useEffect(() => {
+        if (isOpen) {
+            setMensaje("");
+        }
+    }, [isOpen]);
+
     if (!isOpen || !asset) return null;
+    
     const handleEliminar = async () => {
         try {
             await deletePortfolioAsset(asset.asset_id);

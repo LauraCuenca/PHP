@@ -12,7 +12,8 @@ export default function VentaComponent({ asset, isOpen, onClose, onVentaExitosa 
         setMensaje("");
         setCantidadVenta(1);
     }
-}, [isOpen]);
+    }, [isOpen]);
+
     if (!isOpen || !asset) return null;
 
     const precioUnitario = parseFloat(asset.Precio);
@@ -47,8 +48,7 @@ export default function VentaComponent({ asset, isOpen, onClose, onVentaExitosa 
     }
     };
 
-    
-return (
+    return (
         <div className="modal d-block bg-dark bg-opacity-50">
             <div className="modal-dialog modal-dialog-centered">
                 <div className="modal-content">
@@ -69,14 +69,17 @@ return (
                                     type="number"
                                     className="form-control"
                                     value={cantidadVenta}
-                                    onChange={(e) => setCantidadVenta(parseInt(e.target.value) || 1)}
+                                    onChange={(e) => {
+                                        const valor = parseInt(e.target.value) || 1;
+                                        setCantidadVenta(Math.min(maxCantidadVenta, Math.max(1, valor)));
+                                    }}
                                     min="1"
                                     max={maxCantidadVenta}
                                 />
                             </div>
                             <div className="d-flex justify-content-between align-items-center">
                                 <span className="fs-5">💰 Ganancia total:</span>
-                                <span className={`fs-4 fw-bold ${gananciaTotal > 0 ? "text-danger" : "text-success"}`}>
+                                <span className={`fs-4 fw-bold ${gananciaTotal > 0 ? "text-success" : "text-danger"}`}>
                                 ${gananciaTotal}
                             </span>
                             </div>
