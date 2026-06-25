@@ -1,10 +1,15 @@
 import { useEffect, useState } from "react";
 import { getTransactions } from "../services/apiServices";
+import FiltroOperacionesComponent from "../components/FiltroOperacionesComponent";
+import PaginacionComponent from "../components/PaginacionComponent";
 
 export default function MisOperacionesPage() {
   const [operaciones, setOperaciones] = useState([]);
   const [tipo, setTipo] = useState("");
   const [assetSeleccionado, setAssetSeleccionado] = useState("");
+
+  const [paginaActual, setPaginaActual] = useState(1);
+  const registrosPorPagina = 5;
 
   useEffect(() => {
     const cargarOperaciones = async () => {
@@ -18,6 +23,10 @@ export default function MisOperacionesPage() {
 
     cargarOperaciones();
   }, []);
+
+  useEffect(() => {
+    setPaginaActual(1);
+  }, [tipo, assetSeleccionado]);
 
   const assetsUnicos = [
     ...new Set(
@@ -36,65 +45,82 @@ export default function MisOperacionesPage() {
     return coincideTipo && coincideAsset;
   });
 
+  const indiceUltimo =
+    paginaActual * registrosPorPagina;
+
+  const indicePrimero =
+    indiceUltimo - registrosPorPagina;
+
+  const operacionesPagina =
+    operacionesFiltradas.slice(
+      indicePrimero,
+      indiceUltimo
+    );
+
+  const totalPaginas = Math.ceil(
+    operacionesFiltradas.length /
+      registrosPorPagina
+  );
+
   return (
     <section className="manejo-usuarios-page">
-      <h2>Mis Operaciones</h2>
+      <h2 className="mb-4">Mis Operaciones</h2>
 
-      <div className="manejo-usuarios-controles">
+      <FiltroOperacionesComponent
+        tipo={tipo}
+        setTipo={setTipo}
+        assetSeleccionado={assetSeleccionado}
+        setAssetSeleccionado={setAssetSeleccionado}
+        assetsUnicos={assetsUnicos}
+      />
 
-        <select
-          value={tipo}
-          onChange={(e) => setTipo(e.target.value)}
-        >
-          <option value="">Todos los tipos</option>
-          <option value="buy">Compras</option>
-          <option value="sell">Ventas</option>
-        </select>
+      <div className="table-responsive mt-4">
+        <table className="table table-striped table-hover align-middle">
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th>Asset</th>
+              <th>Tipo</th>
+              <th>Cantidad</th>
+              <th>Total</th>
+            </tr>
+          </thead>
 
-        <select
-          value={assetSeleccionado}
-          onChange={(e) => setAssetSeleccionado(e.target.value)}
-        >
-          <option value="">Todos los assets</option>
+          <tbody>
+            {operacionesPagina.map((op) => (
+              <tr key={op.id}>
+                <td>
+                  {new Date(op.transaction_date)
+                    .toLocaleDateString("es-AR")
+                    .replaceAll("/", "-")}
+                </td>
 
-          {assetsUnicos.map((asset) => (
-            <option key={asset} value={asset}>
-              {asset}
-            </option>
-          ))}
-        </select>
+                <td>{op.asset_name}</td>
 
+                <td>
+                  {op.transaction_type === "buy"
+                    ? "Compra"
+                    : "Venta"}
+                </td>
+
+                <td>{op.quantity}</td>
+
+                <td>
+                  ${Number(op.total_amount).toFixed(2)}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
 
-      <table className="manejo-usuarios-tabla">
-        <thead>
-          <tr>
-            <th>Fecha</th>
-            <th>Asset</th>
-            <th>Tipo</th>
-            <th>Cantidad</th>
-            <th>Total</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          {operacionesFiltradas.map((op) => (
-            <tr key={op.id}>
-              <td>{op.transaction_date.split(" ")[0]}</td>
-              <td>{op.asset_name}</td>
-              <td>
-                {op.transaction_type === "buy"
-                  ? "Compra"
-                  : "Venta"}
-              </td>
-              <td>{op.quantity}</td>
-              <td>
-                ${Number(op.total_amount).toFixed(2)}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      {operacionesFiltradas.length > 0 && (
+        <PaginacionComponent
+          paginaActual={paginaActual}
+          totalPaginas={totalPaginas}
+          setPaginaActual={setPaginaActual}
+        />
+      )}
 
       {operacionesFiltradas.length === 0 && (
         <p>No se encontraron operaciones.</p>

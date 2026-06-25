@@ -11,6 +11,7 @@ import Editar from "./pages/EditarPage";
 import Assets from "./pages/StatPage";
 import Portfolio from "./pages/PortfolioPage";
 import Panel from "./pages/PanelPage";
+
 import ManejoUsuarios from "./pages/ManejoUsuarioPage";
 import MisOperaciones from "./pages/MisOperacionesPage";
 
@@ -30,7 +31,7 @@ function App() {
         <Route path="/editar-perfil" element={<Editar />} />
         <Route path="/assets" element={<Assets />} />
         <Route path="/portfolio" element={<Portfolio />} />
-        <Route path="/panel" element={<Panel />} />    
+        <Route path="/panel" element={<Panel />} />  
         <Route path="/admin/usuarios" element={<ManejoUsuarios />} />
         <Route path="/editar-perfil/:id" element={<Editar />} />
         <Route path="/operaciones" element={<MisOperaciones />} />
