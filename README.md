@@ -119,14 +119,19 @@ npm run dev
 
 ### `PUT /users/{id}`
 
+**Modificacion:** Se agregó el parámetro id en la ruta.
+
+
 **Motivo:** se agregó el parámetro `id` en la ruta para permitir que un administrador pueda editar la información de cualquier usuario desde la sección Manejo de Usuarios, reutilizando el formulario de edición.
 
 ---
 
 ### `GET /transactions`
+**Modificacion:** Se implementó el endpoint para obtener el historial de operaciones del usuario autenticado, incorporando filtros por tipo de operación (buy/sell) y activo (asset_id). Además, se modificó la consulta para incluir el nombre del activo (asset_name) mediante un JOIN con la tabla assets.
 
 **Motivo:** se implementaron filtros por tipo de operación (`buy`/`sell`) y por activo (`asset_id`). Además se modificó la consulta para incluir el nombre del activo (`asset_name`) mediante un JOIN con la tabla `assets`, permitiendo visualizar el historial en la sección Mis Operaciones sin requerir consultas adicionales desde el frontend.
 
 ### `POST /login`
+**Modificacion:** Se envia el id a travez del Header
 
-**Motivo:** se implementaron cambios en como se envia el id.
+**Motivo:** Para mantener los datos seguros.
