@@ -126,3 +126,7 @@ npm run dev
 ### `GET /transactions`
 
 **Motivo:** se implementaron filtros por tipo de operación (`buy`/`sell`) y por activo (`asset_id`). Además se modificó la consulta para incluir el nombre del activo (`asset_name`) mediante un JOIN con la tabla `assets`, permitiendo visualizar el historial en la sección Mis Operaciones sin requerir consultas adicionales desde el frontend.
+
+### `POST /login`
+
+**Motivo:** se implementaron cambios en como se envia el id.
