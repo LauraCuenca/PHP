@@ -25,7 +25,7 @@ export default function NavBarComponent() {
                 Portfolio: ${Number(user.portfolio_value ?? 0).toFixed(2)}
               </span>
             </li>
-            <li><Link to="/assets">Listado Assets</Link></li>
+            <li><Link to="/assets">Lista de Activos</Link></li>
             <li><Link to="/portfolio">Mi portfolio</Link></li>
             <li><Link to="/operaciones">Mis operaciones</Link></li>
             <li><Link to="/panel">Ver Panel</Link></li>
@@ -44,7 +44,7 @@ export default function NavBarComponent() {
           <>
             <li><Link to="/login">Login</Link></li>
             <li><Link to="/register">Registro</Link></li>
-            <li><Link to="/assets">Listado Assets</Link></li>
+            <li><Link to="/assets">Lista de Activos</Link></li>
           </>
         )}
 

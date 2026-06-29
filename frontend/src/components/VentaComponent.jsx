@@ -42,7 +42,7 @@ export default function VentaComponent({ asset, isOpen, onClose, onVentaExitosa 
 
 return (
         <div className="modal d-block bg-dark bg-opacity-50">
-            <div className="modal-dialog">
+            <div className="modal-dialog modal-dialog-centered">
                 <div className="modal-content">
                     <div className="modal-header">
                         <h5 className="modal-title">Vender Activo</h5>

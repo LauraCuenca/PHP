@@ -118,7 +118,7 @@ if (user.is_admin !== 1) {
 
   return (
     <section className="manejo-usuarios-page">
-      <h2 className="mb-4">Manejo de usuarios</h2>
+      <h2 className="mb-4 text-black">Manejo de usuarios</h2>
 
       <div className="row g-3 mb-4">
         <div className="col-md-auto">

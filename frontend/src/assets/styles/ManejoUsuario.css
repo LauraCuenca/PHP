@@ -1,8 +1,10 @@
 .manejo-usuarios-page {
+  width: 80%;
+  max-width: 900px;
+  margin: 20px auto;
   padding: 24px;
   background-color: white;
   border-radius: 8px;
-  margin: 20px;
 }
 
 .manejo-usuarios-page h2 {

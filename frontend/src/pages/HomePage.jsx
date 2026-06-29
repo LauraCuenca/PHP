@@ -1,31 +1,19 @@
 import { useEffect, useState } from "react";
-import { testApi } from "../services/apiServices";
+import "../assets/styles/home.css";
 
 export default function Home() {
-
-  const [message, setMessage] = useState("");
-
-  useEffect(() => {
-    const loadApi = async () => {
-      try {
-        const res = await testApi();
-        console.log(res.data);
-        setMessage(res.data);
-      } catch (error) {
-        console.log("Error API:", error.message);
-      }
-    };
-
-    loadApi();
-  }, []);
-
   return (
-    <div>
-      <h1>Home</h1>
+    <section className="home-page">
+      <h1>¡Bienvenido a WallyStreet! 👋</h1>
 
-      <p>Estado del backend:</p>
+      <p className="home-subtitle">
+        Invertí de forma inteligente.
+      </p>
 
-      <h3>{message}</h3>
-    </div>
+      <p className="home-description">
+        Consultá el mercado, administrá tu portfolio y seguí todas tus
+        operaciones desde un mismo lugar.
+      </p>
+    </section>
   );
 }

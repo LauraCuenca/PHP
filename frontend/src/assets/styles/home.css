@@ -1,0 +1,29 @@
+.home-page {
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 32px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  text-align: center;
+}
+
+.home-page h1 {
+  color: #212529;
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+
+.home-subtitle {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #198754;
+  margin-bottom: 15px;
+}
+
+.home-description {
+  font-size: 1.1rem;
+  color: #495057;
+  line-height: 1.7;
+  margin-bottom: 0;
+}

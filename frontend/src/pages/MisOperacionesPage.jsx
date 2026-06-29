@@ -64,7 +64,7 @@ export default function MisOperacionesPage() {
 
   return (
     <section className="manejo-usuarios-page">
-      <h2 className="mb-4">Mis Operaciones</h2>
+      <h2 className="mb-4 text-black">Mis Operaciones</h2>
 
       <FiltroOperacionesComponent
         tipo={tipo}
