@@ -177,23 +177,37 @@ class TradeModel {
 public function getTransactions($userId, $type = null, $assetId = null) {
     $pdo = $this->database->getConnection();
 
-    $query = "SELECT * FROM transactions WHERE user_id = :user_id";
+    $query = "
+        SELECT
+            t.id,
+            t.asset_id,
+            a.name AS asset_name,
+            t.quantity,
+            t.transaction_type,
+            t.price_per_unit,
+            t.total_amount,
+            t.transaction_date
+        FROM transactions t
+        INNER JOIN assets a
+            ON a.id = t.asset_id
+        WHERE t.user_id = :user_id
+    ";
 
     $params = [
         ':user_id' => $userId
     ];
 
-    if ($type !== null) {
-        $query .= " AND transaction_type = :type";
+    if ($type !== null && $type !== '') {
+        $query .= " AND t.transaction_type = :type";
         $params[':type'] = $type;
     }
 
     if ($assetId !== null) {
-        $query .= " AND asset_id = :asset_id";
+        $query .= " AND t.asset_id = :asset_id";
         $params[':asset_id'] = (int)$assetId;
     }
 
-    $query .= " ORDER BY transaction_date DESC";
+    $query .= " ORDER BY t.transaction_date DESC";
 
     $stmt = $pdo->prepare($query);
     $stmt->execute($params);

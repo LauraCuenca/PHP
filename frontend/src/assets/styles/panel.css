@@ -1,0 +1,23 @@
+.grafico-contenedor {
+    height: 160px;
+    border-bottom: 2px solid #ddd;
+}
+
+.grafico-barra {
+    transition: height 0.4s ease;
+    font-size: 10px;
+}
+
+.grafico-barra-dinamica {
+    width: 55px; 
+    min-width: 55px;
+}
+
+.grafico-precio-etiqueta {
+    font-family: var(--bs-font-monospace), monospace;
+    font-size: 10px;
+}
+
+.grafico-hora-etiqueta {
+    font-size: 11px;
+}

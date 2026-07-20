@@ -11,13 +11,19 @@ class PortfolioModel {
    public function getPortfolio($userId) {
     $pdo = $this->database->getConnection();
 
+
     $query = "
         SELECT 
             p.asset_id,
             a.name,
             p.quantity,
             a.current_price,
-            (p.quantity * a.current_price) AS total_value
+            (p.quantity * a.current_price) AS total_value,
+            (SELECT AVG(t.price_per_unit) 
+            FROM transactions t 
+            WHERE t.user_id = p.user_id 
+            AND t.asset_id = p.asset_id 
+            AND t.transaction_type = 'buy') AS avg_purchase_price
         FROM portfolio p
         JOIN assets a ON p.asset_id = a.id
         WHERE p.user_id = :user_id

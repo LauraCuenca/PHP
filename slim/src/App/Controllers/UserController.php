@@ -17,44 +17,83 @@ class UserController {
         $password = $data['password'] ?? null;
         $name = $data['name'] ?? null;
 
-        if (!$email || !$password || !$name) {
-            $response->getBody()->write(json_encode(['error' => 'Faltan datos']));
-            return $response->withHeader('Content-Type', 'application/json')->withStatus(400);
+        $missingFields = [];
+
+        if (!$email) {
+         $missingFields[] = 'email';
+        }
+        if (!$password) {
+         $missingFields[] = 'password';
+        }
+        if (!$name) {
+         $missingFields[] = 'name';
         }
 
+        if (!empty($missingFields)) {
+            $response->getBody()->write(json_encode([
+                'error' => 'Faltan campos obligatorios',
+                'campos faltantes' => $missingFields
+        ]));
+
+             return $response
+                 ->withHeader('Content-Type', 'application/json')
+                 ->withStatus(400);
+         }
+
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $response->getBody()->write(json_encode(['error' => 'Email inválido']));
-            return $response->withHeader('Content-Type', 'application/json')->withStatus(400);
+            $response->getBody()->write(json_encode([
+                'error' => 'El email ingresado no tiene un formato válido'
+        ]));
+
+            return $response
+                ->withHeader('Content-Type', 'application/json')
+                ->withStatus(400);
         }
 
         if (!preg_match('/^[a-zA-Z]+$/', $name)) {
-            $response->getBody()->write(json_encode(['error' => 'Nombre inválido']));
-            return $response->withHeader('Content-Type', 'application/json')->withStatus(400);
+            $response->getBody()->write(json_encode([
+                'error' => 'El nombre solo puede contener letras'
+        ]));
+
+            return $response
+                ->withHeader('Content-Type', 'application/json')
+                ->withStatus(400);
         }
 
         if (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W]).{8,}$/', $password)) {
-            $response->getBody()->write(json_encode(['error' => 'Password inválida']));
-            return $response->withHeader('Content-Type', 'application/json')->withStatus(400);
+            $response->getBody()->write(json_encode([
+             'error' => 'La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un carácter especial'
+        ]));
+
+            return $response
+                ->withHeader('Content-Type', 'application/json')
+                ->withStatus(400);
         }
 
-        $existingUser = $this->userModel->findByEmail($email);
+         $existingUser = $this->userModel->findByEmail($email);
 
         if ($existingUser) {
-            $response->getBody()->write(json_encode(['error' => 'Email ya registrado']));
-            return $response->withHeader('Content-Type', 'application/json')->withStatus(400);
-        }
+             $response->getBody()->write(json_encode([
+                'error' => 'El email ingresado ya se encuentra registrado'
+        ]));
 
-        $passwordHash = password_hash($password, PASSWORD_BCRYPT);
+            return $response
+                ->withHeader('Content-Type', 'application/json')
+                ->withStatus(400);
+         }
 
-        $balance = 1000;
+         $passwordHash = password_hash($password, PASSWORD_BCRYPT);
+         $balance = 1000;
 
         $this->userModel->create($email, $passwordHash, $name, $balance);
 
         $response->getBody()->write(json_encode([
             'message' => 'Usuario creado correctamente'
-        ]));
+         ]));
 
-        return $response->withHeader('Content-Type', 'application/json')->withStatus(201);
+            return $response
+                ->withHeader('Content-Type', 'application/json')
+                ->withStatus(201);
     }
 
     public function getById(Request $request, Response $response, array $args){
@@ -86,7 +125,8 @@ class UserController {
         'email' => $user['email'],
         'name' => $user['name'],
         'balance' => (float) $user['balance'],
-        'portfolio_value' => (float) $portfolioValue
+        'portfolio_value' => (float) $portfolioValue,
+        'is_admin' => (int) $user['is_admin']
         ]));
 
         return $response->withHeader('Content-Type', 'application/json')
@@ -159,6 +199,7 @@ class UserController {
             $portfolioValue = $this->userModel->getPortfolioValue($user['id']);
 
             $result[] = [
+                'id' => $user['id'],
                 'name' => $user['name'],
                 'portfolio_value' => (float) $portfolioValue
             ];

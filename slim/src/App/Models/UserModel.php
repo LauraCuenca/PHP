@@ -66,7 +66,7 @@ class UserModel {
           $total += $asset['total_value'];
     }
 
-    return $total;
+    return round($total, 2);
   }
     public function update($id, $name = null, $password = null){
         $pdo = $this->database->getConnection();

@@ -1,0 +1,21 @@
+.manejo-usuarios-page {
+  width: 80%;
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 24px;
+  background-color: white;
+  border-radius: 8px;
+}
+
+.manejo-usuarios-page h2 {
+  margin-bottom: 20px;
+}
+
+.usuario-destacado {
+  font-weight: bold;
+}
+
+.manejo-usuarios-error {
+  color: red;
+  margin-top: 10px;
+}

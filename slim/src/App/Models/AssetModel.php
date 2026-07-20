@@ -13,7 +13,7 @@ class AssetModel {
     public function getAssetByFilter($nombre, $minPrice, $maxPrice) {
         $pdo = $this->database->getConnection();
         $query =
-        "SELECT a.name, a.current_price
+        "SELECT a.id,a.name, a.current_price
         FROM assets a
         WHERE 1=1";
         if ($nombre!= null) {
